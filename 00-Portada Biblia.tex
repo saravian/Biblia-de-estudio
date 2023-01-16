@@ -1,0 +1,21 @@
+	\begin{titlingpage}
+	\vspace*{\fill}
+	\begin{tikzpicture}[color=Goldenrod,
+		transform shape,
+		every node/.style={inner sep=0pt}] \node[minimum size=\framesize,fill=Black](vecbox){};
+		\node[anchor=north west] at (vecbox.north west){ \pgfornament[width=0.2*\framesize]{63}};
+		\node[anchor=north east] at (vecbox.north east){ \pgfornament[width=0.2*\framesize,symmetry=v]{63}}; 
+		\node[anchor=south west] at (vecbox.south west){ \pgfornament[width=0.2*\framesize,symmetry=h]{63}}; 
+		\node[anchor=south east] at (vecbox.south east){ \pgfornament[width=0.2*\framesize,symmetry=c]{63}}; 
+		\node[anchor=north] at (vecbox.north){ \pgfornament[width=0.6*\framesize,symmetry=h]{46}};
+		\node[anchor=south] at (vecbox.south){ \pgfornament[width=0.6*\framesize]{46}};
+		\node[anchor=north,rotate=90] at (vecbox.west){ \pgfornament[width=0.6*\framesize,symmetry=h]{46}};
+		\node[anchor=north,rotate=-90] at (vecbox.east){ \pgfornament[width=0.6*\framesize,symmetry=h]{46}}; 
+		\node[anchor=south] (textn) at (verycenter.north){\HUGE \textsc{\textbf{\titulo}}};
+		\node[inner sep=6pt] (verycenter) at (vecbox.center){ \pgfornament[width=0.5*\framesize]{88}};
+		\node[anchor=north] (texts) at (verycenter.south){\Large \revision };
+		\node[anchor=north] at (texts.south){ \pgfornament[width=0.5*\framesize]{75}};
+		\node[anchor=south] at (textn.north){ \pgfornament[width=0.5*\framesize,symmetry=h]{75}};
+	\end{tikzpicture}
+	\vspace*{\fill}
+\end{titlingpage}

@@ -1,0 +1,197 @@
+\documentclass[twoside,twocolumn,letterpaper,10pt]{memoir}
+\usepackage{lipsum}
+\usepackage{fixltx2e}
+\usepackage{xspace}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{lettrine}
+\usepackage{flushend}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{microtype}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage[all]{tcolorbox}
+\tcbuselibrary{breakable}
+
+\usepackage{fontawesome}
+\usepackage{fontawesome5}
+
+\usepackage[T1]{fontenc}
+\usepackage{imakeidx}                      % Indice analitico
+\makeindex
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\rightmark}
+\fancyhead[R]{\leftmark}
+\renewcommand{\sectionmark}[1]{\markboth{\thesection. #1}{}}
+\renewcommand{\subsectionmark}[1]{\markright{\thesubsection. #1}}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\usepackage{fontspec}
+\setmainfont{Montserrat}[
+% Files
+%  Path      = \string~/s/fonts/equity/ ,
+%  Extension = .otf ,
+%  % Fonts
+%  UprightFont     = Equity Text A Regular ,
+%  UprightFeatures = { SmallCapsFont = Equity Caps A Regular } ,
+%  BoldFont        = Equity Text A Bold ,
+%  BoldFeatures    = { SmallCapsFont = Equity Caps A Bold } ,
+%  ItalicFont      = Equity Text A Italic ,
+%  BoldItalicFont  = Equity Text A Bold Italic ,
+%  % Features
+%  Numbers = OldStyle ]
+]
+% old-style numbers don't look great as drop-caps
+\newfontfamily{\lettrinefont}{Comfortaa}[
+% Files
+%  Path      = \string~/s/fonts/equity/ ,
+%  Extension = .otf ,
+%  % Fonts
+%  UprightFont     = Equity Text A Regular ,
+%  UprightFeatures = { SmallCapsFont = Equity Caps A Regular } ,
+%  BoldFont        = Equity Text A Bold ,
+%  BoldFeatures    = { SmallCapsFont = Equity Caps A Bold } ,
+%  ItalicFont      = Equity Text A Italic ,
+%  BoldItalicFont  = Equity Text A Bold Italic]
+]
+\newcommand{\framesize}{\textwidth}
+\setlength{\headwidth}{\textwidth}
+\setlength{\columnseprule}{0pt}
+\setlength{\columnsep}{28pt}
+\setlength{\parindent}{0pt}
+\setheadfoot{\baselineskip}{2\baselineskip}
+\setheaderspaces{*}{12pt}{*}
+\clubpenalty10000
+\widowpenalty10000
+
+\usepackage[british]{babel}
+
+\newlength{\versespacing}
+\setlength{\versespacing}{.16667em plus .08333em}
+\newcommand{\versespace}{\hspace{\versespacing}}
+\frenchspacing
+
+\usepackage{eso-pic}
+\newcommand\AtPageUpperRight[1]{\AtPageUpperLeft{%
+		\put(\LenToUnit{\paperwidth},\LenToUnit{0\paperheight}){#1}%
+}}%
+\newcommand\AtPageLowerRight[1]{\AtPageLowerLeft{%
+		\put(\LenToUnit{\paperwidth},\LenToUnit{0\paperheight}){#1}%
+}}%
+
+\newcommand{\sectionstyle}{\bfseries\raggedright\Large}
+\setsecheadstyle{\sectionstyle}
+\setbeforesecskip{0ex}
+\setaftersecskip{0.1ex}
+
+\newcommand{\subsectionstyle}{\bfseries\itshape\raggedright\large}
+\setsubsecheadstyle{\subsectionstyle}
+\setbeforesubsecskip{0ex}
+\setaftersubsecskip{0.1ex}
+
+\makeatletter
+\newcommand\versenumcolor{red}
+\newcommand\chapnumcolor{red}
+\newlength{\biblechapskip}
+\setlength{\biblechapskip}{1em plus .33em minus .2em}
+\newcounter{biblechapter}
+\newcounter{bibleverse}[biblechapter]
+\renewcommand\chaptername{Book}
+\newcommand{\biblebook}[1]{%
+	\setcounter{biblechapter}{0}
+	\gdef\currbook{#1}
+	\chapter*{#1}
+	\addcontentsline{toc}{chapter}{#1}}
+\newcount\biblechap@svdopt
+\newenvironment{biblechapter}[1][\thebiblechapter]
+{\biblechap@svdopt=#1
+	\ifnum\c@biblechapter=\biblechap@svdopt\else
+	\advance\biblechap@svdopt by -1\fi
+	\setcounter{biblechapter}{\the\biblechap@svdopt}
+	\stepcounter{biblechapter}
+	\setbeforesecskip{1ex}\setbeforesubsecskip{1ex}
+	\lettrine[lines=3,lhang=0,findent=0pt,nindent=0pt,loversize=0.25]{\lettrinefont\color{\chapnumcolor}\,\thebiblechapter\,}{}\ignorespaces}
+{\par\vspace{\biblechapskip}\setbeforesecskip{0ex}\setbeforesubsecskip{0ex}}
+\newcommand{\@showversenum}{%
+	\ifnum\c@bibleverse=1\else{\color{\versenumcolor}\textbf{\thebibleverse}~}\fi%
+	\markboth{{\scshape\currbook} \thebiblechapter:\thebibleverse}{{\scshape\currbook} \thebiblechapter:\thebibleverse}%
+	\ignorespaces}
+\renewcommand{\verse}{\stepcounter{bibleverse}\@showversenum}
+\newcommand{\verseWithHeading}[1]{%
+	\stepcounter{bibleverse}%
+	\ifnum\c@bibleverse=1{\sectionstyle#1\newline}\else\section*{#1}\fi\@showversenum}
+\newcommand{\verseWithSubheading}[1]{%
+	\stepcounter{bibleverse}%
+	\ifnum\c@bibleverse=1{\subsectionstyle#1\newline}\else\subsection*{#1}\fi\@showversenum}
+\makeatother
+
+\newcommand{\startornaments}{\AddToShipoutPictureBG{%
+		\checkoddpage%
+		\ifoddpage%
+		\AtPageUpperRight{\put(-60,-35){\pgfornament[width=1.75cm,symmetry=v,color=Goldenrod]{63}}}%
+		\AtPageLowerRight{\put(-60,35){\pgfornament[width=1.75cm,symmetry=c,color=Goldenrod]{63}}}%
+		\else%
+		\AtPageUpperLeft{\put(10,-35){\pgfornament[width=1.75cm,color=Goldenrod]{63}}}%
+		\AtPageLowerLeft{\put(10,35){\pgfornament[width=1.75cm,symmetry=h,color=Goldenrod]{63}}}
+		\fi}}
+
+\newcommand{\stopornaments}{\ClearShipoutPictureBG}
+
+\renewcommand{\printparttitle}[1]{%
+	\thispagestyle{empty}%
+	\addcontentsline{toc}{part}{#1}%
+	\vspace*{\fill}%
+	\begin{tikzpicture}[transform shape,every node/.style={inner sep=0pt}]%
+		\node[minimum size=\framesize](vecbox){};%
+		\node[inner sep=6pt, color=black] (text) at (vecbox.center){%
+			\HUGE \textsc{#1}};%
+		\node[anchor=north, color=Goldenrod] (base) at (text.south){%
+			\pgfornament[width=0.5*\framesize]{88}};%
+	\end{tikzpicture}%
+	\vspace*{\fill}}
+
+\makechapterstyle{dash-embiggened}{%
+	\chapterstyle{default}
+	\setlength{\beforechapskip}{5\onelineskip}
+	\renewcommand*{\printchaptername}{}
+	\renewcommand*{\chapternamenum}{}
+	\renewcommand*{\chapnumfont}{\normalfont\Huge}
+	\settoheight{\midchapskip}{\chapnumfont 1}
+	\renewcommand*{\printchapternum}{\centering \chapnumfont
+		\rule[0.5\midchapskip]{1em}{0.4pt} \thechapter\
+		\rule[0.5\midchapskip]{1em}{0.4pt}}
+	\renewcommand*{\afterchapternum}{\par\nobreak\vskip 0.5\onelineskip}
+	\renewcommand*{\printchapternonum}{\centering
+		\vphantom{\chapnumfont 1}\afterchapternum}
+	\renewcommand*{\chaptitlefont}{\normalfont\HUGE\scshape}
+	\renewcommand*{\printchaptertitle}[1]{\centering \chaptitlefont ##1}
+	\setlength{\afterchapskip}{2.5\onelineskip}}
+
+\chapterstyle{dash-embiggened}
+
+\newcommand{\columnbreak}{\pagebreak}
+
+\newcommand{\LORD}{\textsc{Lord}\xspace}
+\newcommand{\LORDs}{\textsc{Lord's}\xspace}
+
+
+\definecolor{rosa}{RGB}{255,212,229}
+\definecolor{violeta}{RGB}{224,205,255}
+\definecolor{celeste}{RGB}{189,232,239}
+\definecolor{verde}{RGB}{183,215,132}
+\definecolor{amarillo}{RGB}{254,255,162}
+
+\usepackage{soul}
+\newcommand{\motivo}[1]{def}
+\newcommand{\creacion}[1]{def}
+\newcommand{\reino}[1]{\faCrown \space sethlcolor{celeste}\hl{#1}\index{#1}}
+\newcommand{\pacto}[1]{\faHandshake \space \sethlcolor{rosa}\hl{#1}\index{#1}}
+\newcommand{\dispensacion}[1]{\faCrown \space \sethlcolor{violeta}\hl{#1}\index{#1}}
+\newcommand{\epoca}[1]{\faClock \space \sethlcolor{verde}\hl{#1}\index{#1}}
+\newcommand{\juicio}[1]{\faBalanceScaleLeft \space \sethlcolor{amarillo}\hl{#1}\index{#1}}
+\newcommand{\promesa}[1]{\faGifts \space \setulcolor{yellow}\ul{#1}\index{#1}}

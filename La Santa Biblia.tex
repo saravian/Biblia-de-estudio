@@ -1,0 +1,38 @@
+\include{00-biblia-template}
+\newcommand{\titulo}{La Santa Biblia}
+\newcommand{\revision}{Reina-Valera 1960}
+
+\title{\titulo}
+\date{\today}
+\author{}
+
+\begin{document}
+	\frontmatter
+	\input{00-Portada Biblia}
+	\tableofcontents
+	\mainmatter
+	\linespread{2}
+	\part*{Antiguo Testamento}
+	\startornaments
+	\chapter*{Pentateuco}
+	\include{genesis.tex}
+	\input{exodo.tex}\flushcolsend
+	\input{-03-levitico.tex}\flushcolsend
+	\input{-04-numeros.tex}\flushcolsend
+	\input{-05-deuteronomio.tex}\flushcolsend
+	\stopornaments
+	
+	\part*{Nuevo Testamento}
+	\startornaments
+	
+	\stopornaments
+	
+\end{document}
+
+% ejemplo:
+%	\biblebook{Génesis}
+%	
+%	\begin{biblechapter} % Genesis 1
+	%		\verseWithHeading{La creación}
+	%		\verse And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.
+	%	\end{biblechapter}
